@@ -19,9 +19,9 @@ const BalanceInfo = ({ balance }) => {
         </Text>
         <TouchableOpacity style={styles.eyeIcon} onPress={handlePress}>
           {showBalance ? (
-            <Eye color="gray" size={24} />
+            <Eye color="#a9a9a9" size={24} />
           ) : (
-            <EyeOff color="gray" size={24} />
+            <EyeOff color="#a9a9a9" size={24} />
           )}
         </TouchableOpacity>
       </View>

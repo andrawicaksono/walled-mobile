@@ -15,7 +15,7 @@ const BalanceDetail = ({ balance }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     justifyContent: "space-between",
     margin: 20,
     paddingHorizontal: 20,

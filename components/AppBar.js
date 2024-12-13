@@ -20,7 +20,7 @@ const AppBar = ({ fullName, accountType, photo }) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

@@ -25,7 +25,7 @@ const TransactionHistory = () => {
             <Text
               style={[
                 styles.amount,
-                { color: transaction.type === "c" ? "green" : "black" },
+                { color: transaction.type === "c" ? "#008000" : "#000" },
               ]}
             >
               {`${transaction.type === "c" ? "+" : "-"} ${formatCurrency(
@@ -41,7 +41,7 @@ const TransactionHistory = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     marginHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 10,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 10,
     fontWeight: "normal",
-    color: "gray",
+    color: "#a9a9a9",
   },
   amount: {
     flex: 1,

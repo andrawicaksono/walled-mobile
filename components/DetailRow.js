@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     fontSize: 16,
-    color: "white",
+    color: "#fff",
     textAlign: "left",
   },
   value: {
     flexShrink: 1,
     fontSize: 16,
-    color: "white",
+    color: "#fff",
     fontWeight: "bold",
     textAlign: "right",
   },

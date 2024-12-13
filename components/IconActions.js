@@ -6,10 +6,10 @@ const IconActions = () => {
   return (
     <View style={styles.iconSection}>
       <TouchableOpacity style={styles.iconContainer}>
-        <Plus color="white" size={20} />
+        <Plus color="#fff" size={20} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer}>
-        <Send color="white" size={20} />
+        <Send color="#fff" size={20} />
       </TouchableOpacity>
     </View>
   );
