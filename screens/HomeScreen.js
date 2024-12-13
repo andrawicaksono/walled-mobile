@@ -12,7 +12,7 @@ import photo from "../assets/photo.jpeg";
 const HomeScreen = () => {
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <StatusBar style="auto" />
         <ScrollView>
           <AppBar
