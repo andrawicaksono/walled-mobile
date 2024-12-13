@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";

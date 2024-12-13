@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import transactions from "../assets/transactions.json";
 import { formatDate } from "../utils/date";
