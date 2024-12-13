@@ -15,7 +15,7 @@ const BalanceInfo = ({ balance }) => {
       <Text style={styles.title}>Balance</Text>
       <View style={styles.balanceContainer}>
         <Text style={styles.balanceText}>
-          {showBalance ? `Rp${formatCurrency(balance)}` : "**********"}
+          {showBalance ? `Rp${formatCurrency(balance)}` : "***************"}
         </Text>
         <TouchableOpacity style={styles.eyeIcon} onPress={handlePress}>
           {showBalance ? (
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     position: "absolute",
-    left: 200,
+    left: 195,
   },
 });
 
