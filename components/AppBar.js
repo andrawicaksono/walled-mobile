@@ -4,8 +4,6 @@ import { Sun } from "lucide-react-native";
 import { useTheme } from "../contexts/ThemeContext";
 
 const AppBar = ({ fullName, accountType, photo }) => {
-  const { isDark, toggleTheme } = useTheme();
-
   return (
     <View style={styles.header}>
       <View style={styles.profileContainer}>
