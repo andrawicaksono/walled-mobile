@@ -1,14 +1,13 @@
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 import AppBar from "../components/AppBar";
 import Greeting from "../components/Greeting";
 import DetailRow from "../components/DetailRow";
 import BalanceDetail from "../components/BalanceDetail";
 import TransactionHistory from "../components/TransactionHistory";
-
-import photo from "../assets/photo.jpeg";
 import BottomAppBar from "../components/BottomAppBar";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
+import photo from "../assets/photo.jpeg";
 
 const HomeScreen = () => {
   return (
@@ -23,7 +22,7 @@ const HomeScreen = () => {
           />
           <Greeting firstName="Chelsea" />
           <DetailRow label="Account No." value="100899" />
-          <BalanceDetail balance="Rp10.000.000" />
+          <BalanceDetail balance={10000000} />
           <TransactionHistory />
         </ScrollView>
         <BottomAppBar />
@@ -31,5 +30,12 @@ const HomeScreen = () => {
     </SafeAreaProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fafbfd",
+  },
+});
 
 export default HomeScreen;

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
+import { formatCurrency } from "../utils/currency";
 
 const BalanceInfo = ({ balance }) => {
   const [showBalance, setShowBalance] = useState(false);
@@ -14,7 +15,7 @@ const BalanceInfo = ({ balance }) => {
       <Text style={styles.title}>Balance</Text>
       <View style={styles.balanceContainer}>
         <Text style={styles.balanceText}>
-          {showBalance ? balance : "**********"}
+          {showBalance ? `Rp${formatCurrency(balance)}` : "**********"}
         </Text>
         <TouchableOpacity style={styles.eyeIcon} onPress={handlePress}>
           {showBalance ? (
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     position: "absolute",
-    left: 175,
+    left: 200,
   },
 });
 
