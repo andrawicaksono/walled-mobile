@@ -2,12 +2,12 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import AppBar from "../components/AppBar";
+import HomeHeader from "../components/HomeHeader";
 import Greeting from "../components/Greeting";
 import DetailRow from "../components/DetailRow";
 import BalanceDetail from "../components/BalanceDetail";
 import TransactionHistory from "../components/TransactionHistory";
-import BottomAppBar from "../components/BottomAppBar";
+import AppBar from "../components/AppBar";
 import photo from "../assets/photo.jpeg";
 
 const HomeScreen = () => {
@@ -15,18 +15,18 @@ const HomeScreen = () => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <StatusBar style="auto" />
+        <HomeHeader
+          fullName="Chelsea Immanuela"
+          accountType="Personal Account"
+          photo={photo}
+        />
         <ScrollView>
-          <AppBar
-            fullName="Chelsea Immanuela"
-            accountType="Personal Account"
-            photo={photo}
-          />
           <Greeting firstName="Chelsea" />
           <DetailRow label="Account No." value="100899" />
           <BalanceDetail balance={10000000} />
           <TransactionHistory />
         </ScrollView>
-        <BottomAppBar />
+        <AppBar />
       </SafeAreaView>
     </SafeAreaProvider>
   );
