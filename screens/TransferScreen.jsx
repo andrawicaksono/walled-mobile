@@ -50,59 +50,55 @@ const TransferScreen = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <View style={styles.dropdownContainer}>
-              <Text style={styles.label}>To:</Text>
-              <DropDownPicker
-                open={open}
-                value={selectedValue}
-                items={accounts}
-                setOpen={setOpen}
-                setValue={setSelectedValue}
-                style={styles.dropdown}
-                labelStyle={{ color: "#fff", fontSize: 16 }}
-                showArrowIcon={false}
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.label}>To:</Text>
+          <DropDownPicker
+            open={open}
+            value={selectedValue}
+            items={accounts}
+            setOpen={setOpen}
+            setValue={setSelectedValue}
+            style={styles.dropdown}
+            labelStyle={styles.label}
+            showArrowIcon={false}
+          />
+        </View>
+
+        <View style={styles.formContainer}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Amount</Text>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.currencyLabel}>IDR</Text>
+              <TextInput
+                style={styles.amountInput}
+                keyboardType="numeric"
+                value={amountInput}
+                onChangeText={(text) => handleAmountInputChange(text)}
               />
             </View>
-
-            <View style={styles.formContainer}>
-              <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Amount</Text>
-                <View style={styles.inputWrapper}>
-                  <Text style={styles.currencyLabel}>IDR</Text>
-                  <TextInput
-                    style={styles.amountInput}
-                    keyboardType="numeric"
-                    value={amountInput}
-                    onChangeText={(text) => handleAmountInputChange(text)}
-                  />
-                </View>
-                <View style={styles.balanceContainer}>
-                  <Text style={styles.balanceLabel}>Balance</Text>
-                  <Text style={styles.balanceValue}>
-                    IDR{formatCurrency(balance)}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Notes</Text>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.notesInput}
-                    value={notesInput}
-                    onChangeText={(text) => setNotesInput(text)}
-                  />
-                </View>
-              </View>
+            <View style={styles.balanceContainer}>
+              <Text style={styles.balanceLabel}>Balance</Text>
+              <Text style={styles.balanceValue}>
+                IDR{formatCurrency(balance)}
+              </Text>
             </View>
+          </View>
 
-            <View style={styles.buttonContainer}>
-              <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Notes</Text>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.notesInput}
+                value={notesInput}
+                onChangeText={(text) => setNotesInput(text)}
+              />
             </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
+          </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
