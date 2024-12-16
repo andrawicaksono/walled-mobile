@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
@@ -12,7 +20,6 @@ const TransferScreen = () => {
   ];
 
   const [balance, setBalance] = useState(10000000);
-
   const [selectedValue, setSelectedValue] = useState(accounts[0].value);
   const [open, setOpen] = useState(false);
   const [amountInput, setAmountInput] = useState("");
@@ -43,55 +50,59 @@ const TransferScreen = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>To:</Text>
-          <DropDownPicker
-            open={open}
-            value={selectedValue}
-            items={accounts}
-            setOpen={setOpen}
-            setValue={setSelectedValue}
-            style={styles.dropdown}
-            labelStyle={{ color: "#fff", fontSize: 16 }}
-            showArrowIcon={false}
-          />
-        </View>
-
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Amount</Text>
-            <View style={styles.inputWrapper}>
-              <Text style={styles.currencyLabel}>IDR</Text>
-              <TextInput
-                style={styles.amountInput}
-                keyboardType="numeric"
-                value={amountInput}
-                onChangeText={(text) => handleAmountInputChange(text)}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.label}>To:</Text>
+              <DropDownPicker
+                open={open}
+                value={selectedValue}
+                items={accounts}
+                setOpen={setOpen}
+                setValue={setSelectedValue}
+                style={styles.dropdown}
+                labelStyle={{ color: "#fff", fontSize: 16 }}
+                showArrowIcon={false}
               />
             </View>
-            <View style={styles.balanceContainer}>
-              <Text style={styles.balanceLabel}>Balance</Text>
-              <Text style={styles.balanceValue}>
-                IDR{formatCurrency(balance)}
-              </Text>
-            </View>
-          </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Notes</Text>
-            <View style={styles.inputWrapper}>
-              <TextInput
-                style={styles.notesInput}
-                value={notesInput}
-                onChangeText={(text) => setNotesInput(text)}
-              />
-            </View>
-          </View>
-        </View>
+            <View style={styles.formContainer}>
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Amount</Text>
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.currencyLabel}>IDR</Text>
+                  <TextInput
+                    style={styles.amountInput}
+                    keyboardType="numeric"
+                    value={amountInput}
+                    onChangeText={(text) => handleAmountInputChange(text)}
+                  />
+                </View>
+                <View style={styles.balanceContainer}>
+                  <Text style={styles.balanceLabel}>Balance</Text>
+                  <Text style={styles.balanceValue}>
+                    IDR{formatCurrency(balance)}
+                  </Text>
+                </View>
+              </View>
 
-        <View style={styles.buttonContainer}>
-          <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
-        </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Notes</Text>
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    style={styles.notesInput}
+                    value={notesInput}
+                    onChangeText={(text) => setNotesInput(text)}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -101,6 +112,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FAFBFD",
+  },
+
+  scrollView: {
+    paddingBottom: 20,
   },
 
   dropdownContainer: {
