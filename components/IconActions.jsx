@@ -7,7 +7,10 @@ const IconActions = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.iconSection}>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => navigation.navigate("Topup")}
+      >
         <Plus color="#fff" size={20} />
       </TouchableOpacity>
       <TouchableOpacity

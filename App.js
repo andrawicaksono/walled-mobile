@@ -8,6 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import TransferScreen from "./screens/TransferScreen";
 import Header from "./components/Header";
+import TopUpScreen from "./screens/TopUpScreen";
 
 enableScreens();
 
@@ -38,6 +39,14 @@ export default function App() {
           options={{
             title: "Transfer",
             header: () => <Header title="Transfer" />,
+          }}
+        />
+        <Stack.Screen
+          name="Topup"
+          component={TopUpScreen}
+          options={{
+            title: "Top Up",
+            header: () => <Header title="Top Up" />,
           }}
         />
       </Stack.Navigator>
