@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "react-native-paper";
 import AuthButton from "../components/AuthButton";
+import TermsAndConditions from "../components/TermsAndConditions";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -20,6 +21,8 @@ const LoginScreen = () => {
   const [errorFullname, setErrorFullname] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+
+  const [isTncVisible, setIsTncVisible] = useState(false);
 
   const handleChangeEmail = (text) => {
     setEmail(text);
@@ -36,7 +39,7 @@ const LoginScreen = () => {
     setPassword(text);
 
     if (password.length < 8) {
-      setErrorPassword("Password tidak valid");
+      setErrorPassword("Password tidak boleh kurang dari 8 karakter");
     } else {
       setErrorPassword("");
     }
@@ -45,8 +48,8 @@ const LoginScreen = () => {
   const handleChangeFullname = (text) => {
     setFullname(text);
 
-    if (password.length < 8) {
-      setErrorFullname("Fullname tidak valid");
+    if (fullname.length < 1) {
+      setErrorFullname("Nama wajib diisi");
     } else {
       setErrorFullname("");
     }
@@ -92,7 +95,12 @@ const LoginScreen = () => {
             />
             <Text style={styles.termsText}>
               I have read and agree to the{" "}
-              <Text style={styles.termsLink}>Terms and Conditions</Text>
+              <Text
+                onPress={() => setIsTncVisible(!isTncVisible)}
+                style={styles.termsLink}
+              >
+                Terms and Conditions
+              </Text>
               <Text style={{ color: "#FF0000" }}> *</Text>
             </Text>
           </View>
@@ -100,12 +108,15 @@ const LoginScreen = () => {
 
         <View>
           <AuthButton onPress={() => alert("Registered")}>Register</AuthButton>
-
           <View style={styles.footer}>
             <Text style={styles.footerText}>Have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.push("Login")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
               <Text style={styles.loginLink}>Login here</Text>
             </TouchableOpacity>
+            <TermsAndConditions
+              isVisible={isTncVisible}
+              onPressButton={() => setIsTncVisible(!isTncVisible)}
+            />
           </View>
         </View>
       </SafeAreaView>
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   registerButtonText: {
-    color: "#FFFFFF",
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -173,11 +184,14 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 14,
-    color: "black",
+    color: "#000",
   },
   loginLink: {
     fontSize: 14,
     color: "#088A85",
+  },
+  error: {
+    color: "red",
   },
 });
 

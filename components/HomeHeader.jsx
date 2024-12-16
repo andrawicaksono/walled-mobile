@@ -19,7 +19,7 @@ const HomeHeader = ({ fullName, accountType, photo }) => {
         <TouchableOpacity>
           <Sun color="#F8AB39" size={32} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push("Login")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <LogOut color="#000" size={32} />
         </TouchableOpacity>
       </View>
