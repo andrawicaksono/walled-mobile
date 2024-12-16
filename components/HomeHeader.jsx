@@ -1,8 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
-import { Sun } from "lucide-react-native";
+import { LogOut, Sun } from "lucide-react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeHeader = ({ fullName, accountType, photo }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -12,9 +15,14 @@ const HomeHeader = ({ fullName, accountType, photo }) => {
           <Text style={styles.accountType}>{accountType}</Text>
         </View>
       </View>
-      <TouchableOpacity>
-        <Sun color="#F8AB39" size={32} />
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity>
+          <Sun color="#F8AB39" size={32} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("Login")}>
+          <LogOut color="#000" size={32} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -52,6 +60,11 @@ const styles = StyleSheet.create({
   },
   accountType: {
     fontSize: 14,
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    gap: 8,
   },
 });
 

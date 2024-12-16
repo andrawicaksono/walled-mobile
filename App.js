@@ -4,6 +4,8 @@ import { enableScreens } from "react-native-screens";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 enableScreens();
 
@@ -17,6 +19,16 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{ title: "Home", headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ title: "Login", headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ title: "Register", headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
