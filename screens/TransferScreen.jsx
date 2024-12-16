@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: 20,
     marginBottom: 20,
+    backgroundColor: "#fff",
+    paddingVertical: 20,
   },
 
   inputLabel: {
