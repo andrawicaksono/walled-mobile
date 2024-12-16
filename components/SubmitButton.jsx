@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const AuthButton = ({ children, onPress }) => {
+const SubmitButton = ({ children, onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -12,9 +12,6 @@ const AuthButton = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    bottom: 20,
-    left: 0,
-    right: 0,
     alignItems: "center",
     paddingVertical: 10,
   },
@@ -32,4 +29,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthButton;
+export default SubmitButton;

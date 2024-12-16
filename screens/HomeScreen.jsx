@@ -14,12 +14,12 @@ const HomeScreen = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <StatusBar style="auto" />
         <HomeHeader
           fullName="Chelsea Immanuela"
           accountType="Personal Account"
           photo={photo}
-        />
+        ></HomeHeader>
+        <StatusBar style="auto" />
         <ScrollView>
           <Greeting firstName="Chelsea" />
           <DetailRow label="Account No." value="100899" />

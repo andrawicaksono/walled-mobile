@@ -5,7 +5,7 @@ import walledLogo from "../assets/walled.png";
 import Input from "../components/Input";
 import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "react-native-paper";
-import AuthButton from "../components/AuthButton";
+import SubmitButton from "../components/SubmitButton";
 import TermsAndConditions from "../components/TermsAndConditions";
 
 const LoginScreen = () => {
@@ -107,7 +107,9 @@ const LoginScreen = () => {
         </View>
 
         <View>
-          <AuthButton onPress={() => alert("Registered")}>Register</AuthButton>
+          <SubmitButton onPress={() => alert("Registered")}>
+            Register
+          </SubmitButton>
           <View style={styles.footer}>
             <Text style={styles.footerText}>Have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>

@@ -1,14 +1,19 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Plus, Send } from "lucide-react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const IconActions = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.iconSection}>
       <TouchableOpacity style={styles.iconContainer}>
         <Plus color="#fff" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => navigation.navigate("Transfer")}
+      >
         <Send color="#fff" size={20} />
       </TouchableOpacity>
     </View>

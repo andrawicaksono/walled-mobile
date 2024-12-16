@@ -4,7 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import walledLogo from "../assets/walled.png";
 import Input from "../components/Input";
 import { useNavigation } from "@react-navigation/native";
-import AuthButton from "../components/AuthButton";
+import SubmitButton from "../components/SubmitButton";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -66,7 +66,7 @@ const LoginScreen = () => {
         </View>
 
         <View>
-          <AuthButton onPress={() => alert("Logged In")}>Login</AuthButton>
+          <SubmitButton onPress={() => alert("Logged In")}>Login</SubmitButton>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Don't have an account? </Text>
