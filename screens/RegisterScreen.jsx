@@ -8,7 +8,7 @@ import { Checkbox } from "react-native-paper";
 import SubmitButton from "../components/SubmitButton";
 import TermsAndConditions from "../components/TermsAndConditions";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const navigation = useNavigation();
 
   const [isChecked, setIsChecked] = useState(false);
@@ -49,7 +49,7 @@ const LoginScreen = () => {
     setFullname(text);
 
     if (fullname.length < 1) {
-      setErrorFullname("Nama wajib diisi");
+      setErrorFullname("Nama wajib diisi dan tidak boleh kurang dari 1 kar");
     } else {
       setErrorFullname("");
     }
@@ -67,21 +67,21 @@ const LoginScreen = () => {
             value={fullname}
             onChangeText={(text) => handleChangeFullname(text)}
           />
-          {errorFullname && <Text>{errorFullname}</Text>}
+          {errorFullname && <Text style={styles.error}>{errorFullname}</Text>}
           <Input
             placeholder="Email"
             keyboardType="email-address"
             value={email}
             onChangeText={(text) => handleChangeEmail(text)}
           />
-          {errorEmail && <Text>{errorEmail}</Text>}
+          {errorEmail && <Text style={styles.error}>{errorEmail}</Text>}
           <Input
             placeholder="Password"
             secureTextEntry={true}
             value={password}
             onChangeText={(text) => handleChangePassword(text)}
           />
-          {errorPassword && <Text>{errorPassword}</Text>}
+          {errorPassword && <Text style={styles.error}>{errorPassword}</Text>}
           <Input
             placeholder="Avatar Url"
             value={avatar}
@@ -153,32 +153,6 @@ const styles = StyleSheet.create({
   termsLink: {
     color: "#088A85",
   },
-  registerButton: {
-    backgroundColor: "#088A85",
-    borderRadius: 6,
-    alignItems: "center",
-    paddingVertical: 12,
-    width: "90%",
-  },
-  registerButton: {
-    backgroundColor: "#088A85",
-    borderRadius: 6,
-    alignItems: "center",
-    paddingVertical: 12,
-    width: "90%",
-  },
-  buttonContainer: {
-    bottom: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingVertical: 10,
-  },
-  registerButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   footer: {
     paddingHorizontal: 20,
     flexDirection: "row",
@@ -197,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;
