@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import transactions from "../assets/transactions.json";
 import { formatDate } from "../utils/date";
 import { formatCurrency } from "../utils/currency";
@@ -8,7 +8,7 @@ const TransactionHistory = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Transaction History</Text>
-      <View style={styles.list}>
+      <ScrollView style={styles.list}>
         {transactions.map((transaction, index) => (
           <View key={index} style={styles.transactionRow}>
             <View style={styles.transactionInfo}>
@@ -35,7 +35,7 @@ const TransactionHistory = () => {
             </Text>
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 10,
+    height: 300,
   },
   title: {
     fontWeight: "bold",
@@ -54,9 +55,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomColor: "#E5E5E5",
     borderBottomWidth: 1,
-    marginBottom: 20,
   },
   list: {
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   transactionRow: {
