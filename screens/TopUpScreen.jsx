@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingBottom: 20,
     marginTop: 24,
+    gap: 24,
   },
 
   inputContainer: {
