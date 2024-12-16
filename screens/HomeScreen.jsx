@@ -7,7 +7,6 @@ import Greeting from "../components/Greeting";
 import DetailRow from "../components/DetailRow";
 import BalanceDetail from "../components/BalanceDetail";
 import TransactionHistory from "../components/TransactionHistory";
-import AppBar from "../components/AppBar";
 import photo from "../assets/photo.jpeg";
 
 const HomeScreen = () => {
@@ -26,7 +25,6 @@ const HomeScreen = () => {
           <BalanceDetail balance={10000000} />
           <TransactionHistory />
         </ScrollView>
-        <AppBar />
       </SafeAreaView>
     </SafeAreaProvider>
   );
