@@ -50,7 +50,7 @@ const LoginScreen = () => {
               value={email}
               onChangeText={(text) => handleChangeEmail(text)}
             />
-            {errorEmail && <Text>{errorEmail}</Text>}
+            {errorEmail && <Text style={styles.error}>{errorEmail}</Text>}
           </View>
 
           <View>
@@ -59,9 +59,8 @@ const LoginScreen = () => {
               secureTextEntry={true}
               value={password}
               onChangeText={(text) => handleChangePassword(text)}
-              error={errorPassword}
             />
-            {errorPassword && <Text>{errorPassword}</Text>}
+            {errorPassword && <Text style={styles.error}>{errorPassword}</Text>}
           </View>
         </View>
 
@@ -94,25 +93,6 @@ const styles = StyleSheet.create({
   form: {
     gap: 20,
   },
-  loginButton: {
-    backgroundColor: "#088A85",
-    borderRadius: 6,
-    alignItems: "center",
-    paddingVertical: 12,
-    width: "90%",
-  },
-  buttonContainer: {
-    bottom: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingVertical: 10,
-  },
-  loginButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   footer: {
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -125,6 +105,9 @@ const styles = StyleSheet.create({
   registerLink: {
     fontSize: 14,
     color: "#088A85",
+  },
+  error: {
+    color: "red",
   },
 });
 
