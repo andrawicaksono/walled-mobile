@@ -14,6 +14,7 @@ const TermsAndConditions = ({ isVisible, onPressButton }) => {
       <Modal animationType="slide" transparent={true} visible={isVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text style={styles.title}>Terms And Conditions</Text>
             <ScrollView>
               <View style={styles.scrollContainer}>
                 <Text style={styles.modalText}>
@@ -98,6 +99,10 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     alignItems: "center",
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
