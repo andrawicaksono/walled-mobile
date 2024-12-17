@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import walledLogo from "../assets/walled.png";
@@ -24,6 +24,35 @@ const RegisterScreen = () => {
   const [errorPassword, setErrorPassword] = useState("");
 
   const [isTncVisible, setIsTncVisible] = useState(false);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      !fullname ||
+      !email ||
+      !password ||
+      !isChecked ||
+      errorEmail ||
+      errorFullname ||
+      errorPassword
+    ) {
+      setIsButtonDisabled(true);
+      console.log("disabled" + isButtonDisabled);
+      return;
+    }
+
+    setIsButtonDisabled(false);
+    console.log("disabled" + isButtonDisabled);
+  }, [
+    fullname,
+    email,
+    password,
+    errorEmail,
+    errorFullname,
+    errorPassword,
+    isChecked,
+  ]);
 
   const handleChangeEmail = (text) => {
     setEmail(text);
@@ -57,18 +86,7 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = async () => {
-    if (errorEmail || errorFullname || errorPassword)
-      throw new Error("Register Failed: Error Email/Fullname/Password");
-
-    if (!email) {
-      throw new Error("Register Failed: Email required");
-    }
-    if (!fullname) {
-      throw new Error("Register Failed: Fullname required");
-    }
-    if (!password) {
-      throw new Error("Register Failed: Password required");
-    }
+    setIsButtonDisabled(true);
 
     const data = {
       full_name: fullname,
@@ -143,7 +161,9 @@ const RegisterScreen = () => {
         </View>
 
         <View>
-          <SubmitButton onPress={handleRegister}>Register</SubmitButton>
+          <SubmitButton onPress={handleRegister} disabled={isButtonDisabled}>
+            Register
+          </SubmitButton>
           <View style={styles.footer}>
             <Text style={styles.footerText}>Have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>
