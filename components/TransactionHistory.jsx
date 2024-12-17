@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { formatDate } from "../utils/date";
 import { formatCurrency } from "../utils/currency";
-import { fetchUserTransactions } from "../api/ApiManager";
 
-const TransactionHistory = () => {
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetchUserTransactions();
-
-      setTransactions(response.data);
-    })();
-  }, []);
+const TransactionHistory = ({ transactions }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Transaction History</Text>

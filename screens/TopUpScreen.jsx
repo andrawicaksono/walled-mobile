@@ -5,8 +5,11 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { inputFormatCurrency } from "../utils/currency";
 import { postCreateTransaction } from "../api/ApiManager";
+import { useNavigation } from "@react-navigation/native";
 
 const TopUpScreen = () => {
+  const navigation = useNavigation();
+
   const payments = [
     { label: "BYOND Pay", value: "BYOND Pay" },
     { label: "Transfer", value: "Transfer" },
@@ -44,6 +47,13 @@ const TopUpScreen = () => {
     alert(
       `Top Up IDR ${response.data.amount} from ${response.data.from_to} with note: ${response.data.description}`
     );
+
+    setAmountInput("");
+    setNotesInput("");
+    setRawAmountInput(0);
+    setSelectedValue(payments[0].value);
+
+    navigation.navigate("Home");
   };
 
   return (

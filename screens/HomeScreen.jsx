@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { ScrollView, StyleSheet, RefreshControl } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import HomeHeader from "../components/HomeHeader";
@@ -8,7 +8,7 @@ import DetailRow from "../components/DetailRow";
 import BalanceDetail from "../components/BalanceDetail";
 import TransactionHistory from "../components/TransactionHistory";
 import photo from "../assets/photo.jpeg";
-import { fetchUser } from "../api/ApiManager";
+import { fetchUser, fetchUserTransactions } from "../api/ApiManager";
 
 const HomeScreen = () => {
   const [fullName, setFullName] = useState("");
@@ -17,19 +17,35 @@ const HomeScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [accountNo, setAccountNo] = useState("");
   const [balance, setBalance] = useState(0);
+  const [transactions, setTransactions] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchUserData = useCallback(async () => {
+    const response = await fetchUser();
+    const data = response.data;
+
+    setFullName(data.full_name);
+    setFirstName(data.full_name.split(" ")[0]);
+    setAccountNo(data.account_no);
+    setBalance(data.balance);
+    setAvatar(data.avatar_url);
+  }, []);
+
+  const fetchTransactionsData = useCallback(async () => {
+    const response = await fetchUserTransactions();
+    setTransactions(response.data);
+  });
 
   useEffect(() => {
-    (async () => {
-      const response = await fetchUser();
-      const data = response.data;
+    fetchUserData();
+    fetchTransactionsData();
+  }, [fetchUserData, fetchTransactionsData]);
 
-      setFullName(data.full_name);
-      setFirstName(data.full_name.split(" ")[0]);
-      setAccountNo(data.account_no);
-      setBalance(data.balance);
-      setAvatar(data.avatar_url);
-    })();
-  }, []);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchUserData();
+    setRefreshing(false);
+  };
 
   return (
     <SafeAreaProvider>
@@ -38,13 +54,17 @@ const HomeScreen = () => {
           fullName={fullName}
           accountType={accountType}
           photo={avatar ? avatar : photo}
-        ></HomeHeader>
+        />
         <StatusBar style="auto" />
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <Greeting firstName={firstName} />
           <DetailRow label="Account No." value={accountNo} />
           <BalanceDetail balance={balance} />
-          <TransactionHistory />
+          <TransactionHistory transactions={transactions} />
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { formatCurrency, inputFormatCurrency } from "../utils/currency";
 import { fetchUser, postCreateTransaction } from "../api/ApiManager";
+import { useNavigation } from "@react-navigation/native";
 
 const TransferScreen = () => {
+  const navigation = useNavigation();
+
   const accounts = [
     { label: "832039 (Andra Wicaksono)", value: "832039" },
     { label: "823748 (Wicaksono Andra)", value: "823748" },
@@ -18,13 +28,22 @@ const TransferScreen = () => {
   const [amountInput, setAmountInput] = useState("");
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchUserData = useCallback(async () => {
+    const response = await fetchUser();
+    setBalance(response.data.balance);
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      const response = await fetchUser();
-      setBalance(response.data.balance);
-    })();
-  }, []);
+    fetchUserData();
+  }, [fetchUserData]);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchUserData();
+    setRefreshing(false);
+  };
 
   const handleAmountInputChange = (text) => {
     const rawValue = text.replace(/[^\d]/g, "");
@@ -54,60 +73,73 @@ const TransferScreen = () => {
     alert(
       `Transfering IDR ${response.data.amount} to ${response.data.from_to} with note: ${response.data.description}`
     );
+
+    setSelectedValue(accounts[0].value);
+    setAmountInput("");
+    setNotesInput("");
+    setRawAmountInput(0);
+
+    navigation.navigate("Home");
   };
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>To:</Text>
-          <DropDownPicker
-            open={open}
-            value={selectedValue}
-            items={accounts}
-            setOpen={setOpen}
-            setValue={setSelectedValue}
-            style={styles.dropdown}
-            labelStyle={styles.label}
-            showArrowIcon={false}
-          />
-        </View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={styles.dropdownContainer}>
+            <Text style={styles.label}>To:</Text>
+            <DropDownPicker
+              open={open}
+              value={selectedValue}
+              items={accounts}
+              setOpen={setOpen}
+              setValue={setSelectedValue}
+              style={styles.dropdown}
+              labelStyle={styles.label}
+              showArrowIcon={false}
+            />
+          </View>
 
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Amount</Text>
-            <View style={styles.inputWrapper}>
-              <Text style={styles.currencyLabel}>IDR</Text>
-              <TextInput
-                style={styles.amountInput}
-                keyboardType="numeric"
-                value={amountInput}
-                onChangeText={(text) => handleAmountInputChange(text)}
-              />
+          <View style={styles.formContainer}>
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Amount</Text>
+              <View style={styles.inputWrapper}>
+                <Text style={styles.currencyLabel}>IDR</Text>
+                <TextInput
+                  style={styles.amountInput}
+                  keyboardType="numeric"
+                  value={amountInput}
+                  onChangeText={(text) => handleAmountInputChange(text)}
+                />
+              </View>
+              <View style={styles.balanceContainer}>
+                <Text style={styles.balanceLabel}>Balance</Text>
+                <Text style={styles.balanceValue}>
+                  IDR{formatCurrency(balance)}
+                </Text>
+              </View>
             </View>
-            <View style={styles.balanceContainer}>
-              <Text style={styles.balanceLabel}>Balance</Text>
-              <Text style={styles.balanceValue}>
-                IDR{formatCurrency(balance)}
-              </Text>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Notes</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.notesInput}
+                  value={notesInput}
+                  onChangeText={(text) => setNotesInput(text)}
+                />
+              </View>
             </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Notes</Text>
-            <View style={styles.inputWrapper}>
-              <TextInput
-                style={styles.notesInput}
-                value={notesInput}
-                onChangeText={(text) => setNotesInput(text)}
-              />
-            </View>
+          <View style={styles.buttonContainer}>
+            <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
           </View>
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
