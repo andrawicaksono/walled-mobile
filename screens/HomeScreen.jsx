@@ -12,8 +12,8 @@ import { fetchUser } from "../api/ApiManager";
 
 const HomeScreen = () => {
   const [fullName, setFullName] = useState("");
-  // const [accountType, setAccountType] = useState("Personal Account");
-  // const [avatar, setAvatar] = useState("");
+  const [accountType, setAccountType] = useState("Personal Account");
+  const [avatar, setAvatar] = useState("");
   const [firstName, setFirstName] = useState("");
   const [accountNo, setAccountNo] = useState("");
   const [balance, setBalance] = useState(0);
@@ -26,6 +26,7 @@ const HomeScreen = () => {
     setFirstName(data.full_name.split(" ")[0]);
     setAccountNo(data.account_no);
     setBalance(data.balance);
+    setAvatar(data.avatar_url);
   }, []);
 
   return (
@@ -33,8 +34,8 @@ const HomeScreen = () => {
       <SafeAreaView style={styles.container}>
         <HomeHeader
           fullName={fullName}
-          accountType="Personal Account"
-          photo={photo}
+          accountType={accountType}
+          photo={avatar ? avatar : photo}
         ></HomeHeader>
         <StatusBar style="auto" />
         <ScrollView>

@@ -1,30 +1,28 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { formatCurrency, inputFormatCurrency } from "../utils/currency";
+import { fetchUser, postCreateTransaction } from "../api/ApiManager";
 
 const TransferScreen = () => {
   const accounts = [
-    { label: "83203927423 (Andra Wicaksono)", value: "83203927423" },
-    { label: "82374824343 (Wicaksono Andra)", value: "82374824343" },
+    { label: "832039 (Andra Wicaksono)", value: "832039" },
+    { label: "823748 (Wicaksono Andra)", value: "823748" },
   ];
 
-  const [balance, setBalance] = useState(10000000);
+  const [balance, setBalance] = useState(0);
   const [selectedValue, setSelectedValue] = useState(accounts[0].value);
   const [open, setOpen] = useState(false);
   const [amountInput, setAmountInput] = useState("");
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
+
+  useEffect(async () => {
+    const response = await fetchUser();
+    setBalance(response.data.balance);
+  }, []);
 
   const handleAmountInputChange = (text) => {
     const rawValue = text.replace(/[^\d]/g, "");
@@ -41,9 +39,18 @@ const TransferScreen = () => {
     }
   };
 
-  const handleTransfer = () => {
+  const handleTransfer = async () => {
+    const data = {
+      type: "d",
+      from_to: selectedValue,
+      amount: rawAmountInput,
+    };
+
+    if (notesInput) data.description = notesInput;
+
+    const response = await postCreateTransaction(data);
     alert(
-      `Transfering IDR ${amountInput} to ${selectedValue} with note: ${notesInput}`
+      `Transfering IDR ${response.data.amount} to ${response.data.from_to} with note: ${response.data.description}`
     );
   };
 

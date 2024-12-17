@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
@@ -17,7 +9,7 @@ import { postCreateTransaction } from "../api/ApiManager";
 const TopUpScreen = () => {
   const payments = [
     { label: "BYOND Pay", value: "BYOND Pay" },
-    { label: "Bank Transfer", value: "Bank Transfer" },
+    { label: "Transfer", value: "Transfer" },
   ];
 
   const [selectedValue, setSelectedValue] = useState(payments[0].value);
@@ -49,9 +41,8 @@ const TopUpScreen = () => {
     if (notesInput) data.description = notesInput;
 
     const response = await postCreateTransaction(data);
-    console.log(response);
     alert(
-      `Top Up IDR ${amountInput} from ${selectedValue} with note: ${notesInput}`
+      `Top Up IDR ${response.data.amount} from ${response.data.from_to} with note: ${response.data.description}`
     );
   };
 

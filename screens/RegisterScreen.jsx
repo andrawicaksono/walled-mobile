@@ -42,10 +42,9 @@ const RegisterScreen = () => {
       errorPassword
     ) {
       setIsButtonDisabled(true);
-      return;
+    } else {
+      setIsButtonDisabled(false);
     }
-
-    setIsButtonDisabled(false);
   }, [
     fullname,
     email,
