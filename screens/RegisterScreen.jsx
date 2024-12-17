@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "react-native-paper";
 import SubmitButton from "../components/SubmitButton";
 import TermsAndConditions from "../components/TermsAndConditions";
+import { register } from "../api/ApiManager";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -53,6 +54,41 @@ const RegisterScreen = () => {
     } else {
       setErrorFullname("");
     }
+  };
+
+  const handleRegister = async () => {
+    if (errorEmail || errorFullname || errorPassword)
+      throw new Error("Register Failed: Error Email/Fullname/Password");
+
+    if (!email) {
+      throw new Error("Register Failed: Email required");
+    }
+    if (!fullname) {
+      throw new Error("Register Failed: Fullname required");
+    }
+    if (!password) {
+      throw new Error("Register Failed: Password required");
+    }
+
+    const data = {
+      full_name: fullname,
+      email: email,
+      password: password,
+    };
+
+    if (avatar) {
+      data.avatar_url = avatar;
+    }
+
+    const response = await register(data);
+
+    alert(response.message);
+
+    if (!response.success) {
+      throw new Error(response.message);
+    }
+
+    navigation.navigate("Login");
   };
 
   return (
@@ -107,9 +143,7 @@ const RegisterScreen = () => {
         </View>
 
         <View>
-          <SubmitButton onPress={() => alert("Registered")}>
-            Register
-          </SubmitButton>
+          <SubmitButton onPress={handleRegister}>Register</SubmitButton>
           <View style={styles.footer}>
             <Text style={styles.footerText}>Have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>
