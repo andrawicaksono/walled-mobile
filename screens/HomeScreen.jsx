@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -8,21 +8,39 @@ import DetailRow from "../components/DetailRow";
 import BalanceDetail from "../components/BalanceDetail";
 import TransactionHistory from "../components/TransactionHistory";
 import photo from "../assets/photo.jpeg";
+import { fetchUser } from "../api/ApiManager";
 
 const HomeScreen = () => {
+  const [fullName, setFullName] = useState("");
+  // const [accountType, setAccountType] = useState("Personal Account");
+  // const [avatar, setAvatar] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [accountNo, setAccountNo] = useState("");
+  const [balance, setBalance] = useState(0);
+
+  useEffect(async () => {
+    const response = await fetchUser();
+    const data = response.data;
+
+    setFullName(data.full_name);
+    setFirstName(data.full_name.split(" ")[0]);
+    setAccountNo(data.account_no);
+    setBalance(data.balance);
+  }, []);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <HomeHeader
-          fullName="Chelsea Immanuela"
+          fullName={fullName}
           accountType="Personal Account"
           photo={photo}
         ></HomeHeader>
         <StatusBar style="auto" />
         <ScrollView>
-          <Greeting firstName="Chelsea" />
-          <DetailRow label="Account No." value="100899" />
-          <BalanceDetail balance={10000000} />
+          <Greeting firstName={firstName} />
+          <DetailRow label="Account No." value={accountNo} />
+          <BalanceDetail balance={balance} />
           <TransactionHistory />
         </ScrollView>
       </SafeAreaView>

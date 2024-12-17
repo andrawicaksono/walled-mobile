@@ -2,11 +2,11 @@ import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import sun from "../assets/sun.png";
 
-const Greeting = () => {
+const Greeting = ({ firstName }) => {
   return (
     <View style={styles.greetingContainer}>
       <View style={styles.textSection}>
-        <Text style={styles.greetingTitle}>Good Morning, Chelsea</Text>
+        <Text style={styles.greetingTitle}>Good Morning, {firstName}</Text>
         <Text style={styles.greetingSubtitle}>
           Check all your incoming and outgoing transactions here
         </Text>

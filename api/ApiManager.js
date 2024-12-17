@@ -1,14 +1,8 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const token = AsyncStorage.getItem("userToken");
-
 const api = axios.create({
   baseURL: "http://54.254.164.127/api/v1",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: token ? `Bearer ${token}` : null,
-  },
 });
 
 export const postRegister = async (data) => {
@@ -40,8 +34,12 @@ export const postLogin = async (data) => {
 };
 
 export const fetchUser = async () => {
+  const token = await AsyncStorage.getItem("userToken");
+
   try {
-    const response = await api.get("/users/me");
+    const response = await api.get("/users/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (err) {
     if (err.response.status === 500) {
@@ -54,8 +52,12 @@ export const fetchUser = async () => {
 };
 
 export const fetchUserTransactions = async () => {
+  const token = await AsyncStorage.getItem("userToken");
+
   try {
-    const response = await api.get("/transactions");
+    const response = await api.get("/transactions", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (err) {
     if (err.response.status === 500) {
@@ -68,8 +70,12 @@ export const fetchUserTransactions = async () => {
 };
 
 export const postCreateTransaction = async (data) => {
+  const token = await AsyncStorage.getItem("userToken");
+
   try {
-    const response = await api.post("/transactions", data);
+    const response = await api.post("/transactions", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (err) {
     if (err.response.status === 500) {
