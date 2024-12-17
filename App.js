@@ -19,47 +19,43 @@ const Stack = createNativeStackNavigator();
 
 const TabNavigator = () => {
   return (
-    <AuthProvider>
-      {auth ? (
-        <Tab.Navigator
-          screenOptions={{
-            tabBarStyle: { height: 60, paddingBottom: 10 },
-          }}
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              title: "Home",
-              headerShown: false,
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="home" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Transfer"
-            component={TransferScreen}
-            options={{
-              title: "Transfer",
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="exchange" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Topup"
-            component={TopUpScreen}
-            options={{
-              title: "Top Up",
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="credit-card" color={color} size={size} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      ) : null}
-    </AuthProvider>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: { height: 60, paddingBottom: 10 },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: "Home",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Transfer"
+        component={TransferScreen}
+        options={{
+          title: "Transfer",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="exchange" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Topup"
+        component={TopUpScreen}
+        options={{
+          title: "Top Up",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="credit-card" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -69,26 +65,22 @@ export default function App() {
     <AuthProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {auth ? (
-            <Stack.Screen
-              name="Home"
-              component={TabNavigator}
-              options={{ title: "Home", headerShown: false }}
-            />
-          ) : (
-            <>
-              <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{ title: "Login", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Register"
-                component={RegisterScreen}
-                options={{ title: "Register", headerShown: false }}
-              />
-            </>
-          )}
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ title: "Login", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ title: "Register", headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="Home"
+            component={TabNavigator}
+            options={{ title: "Home", headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

@@ -2,9 +2,15 @@ import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { LogOut, Sun } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../contexts/AuthContext";
 
 const HomeHeader = ({ fullName, accountType, photo }) => {
   const navigation = useNavigation();
+  const auth = useAuth();
+
+  const handleLogout = async () => {
+    await auth.logout();
+  };
 
   return (
     <View style={styles.container}>
@@ -19,7 +25,7 @@ const HomeHeader = ({ fullName, accountType, photo }) => {
         <TouchableOpacity>
           <Sun color="#F8AB39" size={32} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={handleLogout}>
           <LogOut color="#000" size={32} />
         </TouchableOpacity>
       </View>

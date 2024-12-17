@@ -1,38 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import walledLogo from "../assets/walled.png";
 import Input from "../components/Input";
 import { useNavigation } from "@react-navigation/native";
 import SubmitButton from "../components/SubmitButton";
+import { useAuth } from "../contexts/AuthContext";
+import { postLogin } from "../api/ApiManager";
 
 const LoginScreen = () => {
+  const auth = useAuth();
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [errorEmail, setErrorEmail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-
   const handleChangeEmail = (text) => {
     setEmail(text);
-
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailRegex.test(email)) {
-      setErrorEmail("Email tidak valid!");
-    } else {
-      setErrorEmail("");
-    }
   };
 
   const handleChangePassword = (text) => {
     setPassword(text);
+  };
 
-    if (password.length < 8) {
-      setErrorPassword("Password tidak valid");
-    } else {
-      setErrorPassword("");
+  const handleLogin = async () => {
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await postLogin(data);
+      alert(response.message);
+
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+
+      await auth.login(response.data.token);
+
+      navigation.navigate("Home");
+    } catch (err) {
+      console.error(err.message);
+      throw err;
     }
   };
 
@@ -50,7 +60,6 @@ const LoginScreen = () => {
               value={email}
               onChangeText={(text) => handleChangeEmail(text)}
             />
-            {errorEmail && <Text style={styles.error}>{errorEmail}</Text>}
           </View>
 
           <View>
@@ -60,12 +69,11 @@ const LoginScreen = () => {
               value={password}
               onChangeText={(text) => handleChangePassword(text)}
             />
-            {errorPassword && <Text style={styles.error}>{errorPassword}</Text>}
           </View>
         </View>
 
         <View>
-          <SubmitButton onPress={() => alert("Logged In")}>Login</SubmitButton>
+          <SubmitButton onPress={handleLogin}>Login</SubmitButton>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Don't have an account? </Text>
