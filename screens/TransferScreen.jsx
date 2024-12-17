@@ -19,9 +19,11 @@ const TransferScreen = () => {
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
 
-  useEffect(async () => {
-    const response = await fetchUser();
-    setBalance(response.data.balance);
+  useEffect(() => {
+    (async () => {
+      const response = await fetchUser();
+      setBalance(response.data.balance);
+    })();
   }, []);
 
   const handleAmountInputChange = (text) => {

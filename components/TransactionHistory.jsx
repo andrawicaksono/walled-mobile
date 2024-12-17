@@ -7,10 +7,12 @@ import { fetchUserTransactions } from "../api/ApiManager";
 const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
 
-  useEffect(async () => {
-    const response = await fetchUserTransactions();
+  useEffect(() => {
+    (async () => {
+      const response = await fetchUserTransactions();
 
-    setTransactions(response.data);
+      setTransactions(response.data);
+    })();
   }, []);
   return (
     <View style={styles.container}>

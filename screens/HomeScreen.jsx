@@ -18,15 +18,17 @@ const HomeScreen = () => {
   const [accountNo, setAccountNo] = useState("");
   const [balance, setBalance] = useState(0);
 
-  useEffect(async () => {
-    const response = await fetchUser();
-    const data = response.data;
+  useEffect(() => {
+    (async () => {
+      const response = await fetchUser();
+      const data = response.data;
 
-    setFullName(data.full_name);
-    setFirstName(data.full_name.split(" ")[0]);
-    setAccountNo(data.account_no);
-    setBalance(data.balance);
-    setAvatar(data.avatar_url);
+      setFullName(data.full_name);
+      setFirstName(data.full_name.split(" ")[0]);
+      setAccountNo(data.account_no);
+      setBalance(data.balance);
+      setAvatar(data.avatar_url);
+    })();
   }, []);
 
   return (
