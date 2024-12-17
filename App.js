@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 import { enableScreens } from "react-native-screens";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import TransferScreen from "./screens/TransferScreen";
 import TopUpScreen from "./screens/TopUpScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
 
 enableScreens();
 
@@ -19,52 +20,55 @@ const Stack = createNativeStackNavigator();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: { height: 60, paddingBottom: 10 },
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={color} size={size} />
-          ),
+    <ProtectedRoute>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: { height: 60, paddingBottom: 10 },
         }}
-      />
-      <Tab.Screen
-        name="Transfer"
-        component={TransferScreen}
-        options={{
-          title: "Transfer",
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="exchange" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Topup"
-        component={TopUpScreen}
-        options={{
-          title: "Top Up",
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="credit-card" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Transfer"
+          component={TransferScreen}
+          options={{
+            title: "Transfer",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="exchange" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Topup"
+          component={TopUpScreen}
+          options={{
+            title: "Top Up",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="credit-card" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </ProtectedRoute>
   );
 };
 
 export default function App() {
   const auth = useAuth();
+
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={auth ? "Main" : "Login"}>
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -75,11 +79,10 @@ export default function App() {
             component={RegisterScreen}
             options={{ title: "Register", headerShown: false }}
           />
-
           <Stack.Screen
-            name="Home"
+            name="Main"
             component={TabNavigator}
-            options={{ title: "Home", headerShown: false }}
+            options={{ title: "Main", headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

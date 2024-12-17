@@ -39,7 +39,7 @@ const LoginScreen = () => {
 
       await auth.login(response.data.token);
 
-      navigation.navigate("Home");
+      navigation.navigate("Main");
     } catch (err) {
       console.error(err.message);
       throw err;
