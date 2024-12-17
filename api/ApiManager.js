@@ -11,7 +11,7 @@ const api = axios.create({
   },
 });
 
-export const register = async (data) => {
+export const postRegister = async (data) => {
   try {
     const response = await api.post("/auth/register", data);
     return response.data;
@@ -25,7 +25,7 @@ export const register = async (data) => {
   }
 };
 
-export const login = async (data) => {
+export const postLogin = async (data) => {
   try {
     const response = await api.post("/auth/login", data);
     return response.data;
@@ -67,7 +67,7 @@ export const fetchUserTransactions = async () => {
   }
 };
 
-export const createTransaction = async (data) => {
+export const postCreateTransaction = async (data) => {
   try {
     const response = await api.post("/transactions", data);
     return response.data;

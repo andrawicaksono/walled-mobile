@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "react-native-paper";
 import SubmitButton from "../components/SubmitButton";
 import TermsAndConditions from "../components/TermsAndConditions";
-import { register } from "../api/ApiManager";
+import { postRegister } from "../api/ApiManager";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -28,6 +28,10 @@ const RegisterScreen = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
+    setIsButtonDisabled(true);
+  }, []);
+
+  useEffect(() => {
     if (
       !fullname ||
       !email ||
@@ -38,12 +42,10 @@ const RegisterScreen = () => {
       errorPassword
     ) {
       setIsButtonDisabled(true);
-      console.log("disabled" + isButtonDisabled);
       return;
     }
 
     setIsButtonDisabled(false);
-    console.log("disabled" + isButtonDisabled);
   }, [
     fullname,
     email,
@@ -98,7 +100,7 @@ const RegisterScreen = () => {
       data.avatar_url = avatar;
     }
 
-    const response = await register(data);
+    const response = await postRegister(data);
 
     alert(response.message);
 
