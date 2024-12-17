@@ -12,6 +12,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { inputFormatCurrency } from "../utils/currency";
+import { postCreateTransaction } from "../api/ApiManager";
 
 const TopUpScreen = () => {
   const payments = [
@@ -38,7 +39,17 @@ const TopUpScreen = () => {
     }
   };
 
-  const handleTopUp = () => {
+  const handleTopUp = async () => {
+    const data = {
+      type: "c",
+      from_to: selectedValue,
+      amount: rawAmountInput,
+    };
+
+    if (notesInput) data.description = notesInput;
+
+    const response = await postCreateTransaction(data);
+    console.log(response);
     alert(
       `Top Up IDR ${amountInput} from ${selectedValue} with note: ${notesInput}`
     );
