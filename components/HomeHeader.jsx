@@ -10,6 +10,7 @@ const HomeHeader = ({ fullName, accountType, photo }) => {
 
   const handleLogout = async () => {
     await auth.logout();
+    navigation.navigate("Login");
   };
 
   return (
