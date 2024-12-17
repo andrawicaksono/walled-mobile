@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "react-native-gesture-handler";
 import { enableScreens } from "react-native-screens";
 import { NavigationContainer } from "@react-navigation/native";
@@ -62,30 +62,40 @@ const TabNavigator = () => {
   );
 };
 
-export default function App() {
+const StackNavigator = () => {
   const auth = useAuth();
-
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={auth ? "Main" : "Login"}>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ title: "Login", headerShown: false }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{ title: "Register", headerShown: false }}
-          />
+    <NavigationContainer>
+      <Stack.Navigator>
+        {!auth.isLoggedIn ? (
+          <>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ title: "Login", headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{ title: "Register", headerShown: false }}
+            />
+          </>
+        ) : (
           <Stack.Screen
             name="Main"
             component={TabNavigator}
             options={{ title: "Main", headerShown: false }}
           />
-        </Stack.Navigator>
-      </NavigationContainer>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <StackNavigator />
     </AuthProvider>
   );
 }
