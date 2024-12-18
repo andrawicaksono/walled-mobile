@@ -7,12 +7,12 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { formatCurrency, inputFormatCurrency } from "../utils/currency";
 import { fetchUser, postCreateTransaction } from "../api/ApiManager";
 import { useNavigation } from "@react-navigation/native";
+import { Dropdown } from "react-native-element-dropdown";
 
 const TransferScreen = () => {
   const navigation = useNavigation();
@@ -24,7 +24,6 @@ const TransferScreen = () => {
 
   const [balance, setBalance] = useState(0);
   const [selectedValue, setSelectedValue] = useState(accounts[0].value);
-  const [open, setOpen] = useState(false);
   const [amountInput, setAmountInput] = useState("");
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
@@ -109,15 +108,16 @@ const TransferScreen = () => {
         >
           <View style={styles.dropdownContainer}>
             <Text style={styles.label}>To:</Text>
-            <DropDownPicker
-              open={open}
+            <Dropdown
+              data={accounts}
               value={selectedValue}
-              items={accounts}
-              setOpen={setOpen}
-              setValue={setSelectedValue}
+              labelField="label"
+              valueField="value"
+              placeholder="Select an account"
+              onChange={(item) => setSelectedValue(item.value)}
+              selectedTextStyle={styles.selectedText}
+              placeholderStyle={styles.placeholderText}
               style={styles.dropdown}
-              labelStyle={styles.label}
-              showArrowIcon={false}
             />
           </View>
 
@@ -170,25 +170,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAFBFD",
   },
 
-  scrollView: {
-    paddingBottom: 20,
-  },
-
   dropdownContainer: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#19918F",
     paddingHorizontal: 20,
+    height: 48,
   },
   label: {
     fontSize: 16,
     color: "#fff",
+    marginRight: 10,
   },
 
   dropdown: {
+    flex: 1,
     backgroundColor: "transparent",
     borderWidth: 0,
+    height: "100%",
+  },
+  selectedText: {
+    fontSize: 16,
     color: "#fff",
+  },
+  placeholderText: {
+    fontSize: 16,
+    color: "#B3B3B3",
   },
 
   formContainer: {
