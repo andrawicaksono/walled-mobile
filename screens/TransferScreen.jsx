@@ -37,7 +37,13 @@ const TransferScreen = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [fetchUserData]);
+  }, []);
+
+  useEffect(() => {
+    if (refreshing) {
+      fetchUserData();
+    }
+  }, [refreshing]);
 
   const onRefresh = async () => {
     setRefreshing(true);

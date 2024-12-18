@@ -39,7 +39,14 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchUserData();
     fetchTransactionsData();
-  }, [fetchUserData, fetchTransactionsData]);
+  }, []);
+
+  useEffect(() => {
+    if (refreshing) {
+      fetchUserData();
+      fetchTransactionsData();
+    }
+  }, [refreshing]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -53,7 +60,7 @@ const HomeScreen = () => {
         <HomeHeader
           fullName={fullName}
           accountType={accountType}
-          photo={avatar ? avatar : photo}
+          photo={avatar ? { uri: avatar } : photo}
         />
         <StatusBar style="auto" />
         <ScrollView
