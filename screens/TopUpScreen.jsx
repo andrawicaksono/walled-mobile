@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import { Dropdown } from "react-native-element-dropdown";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import SubmitButton from "../components/SubmitButton";
 import { inputFormatCurrency } from "../utils/currency";
@@ -16,7 +16,6 @@ const TopUpScreen = () => {
   ];
 
   const [selectedValue, setSelectedValue] = useState(payments[0].value);
-  const [open, setOpen] = useState(false);
   const [amountInput, setAmountInput] = useState("");
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
@@ -36,11 +35,7 @@ const TopUpScreen = () => {
   };
 
   useEffect(() => {
-    if (amountInput) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
+    setIsButtonDisabled(!amountInput);
   }, [amountInput]);
 
   const handleTopUp = async () => {
@@ -84,14 +79,16 @@ const TopUpScreen = () => {
           </View>
 
           <View style={styles.dropdownContainer}>
-            <DropDownPicker
-              open={open}
+            <Dropdown
+              data={payments}
               value={selectedValue}
-              items={payments}
-              setOpen={setOpen}
-              setValue={setSelectedValue}
+              labelField="label"
+              valueField="value"
+              placeholder="Select Payment Method"
+              onChange={(item) => setSelectedValue(item.value)}
               style={styles.dropdown}
-              labelStyle={styles.label}
+              selectedTextStyle={styles.selectedText}
+              placeholderStyle={styles.placeholderText}
             />
           </View>
 
@@ -124,20 +121,22 @@ const styles = StyleSheet.create({
   },
 
   dropdownContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#fff",
     paddingHorizontal: 20,
   },
-  label: {
+
+  dropdown: {
+    height: 50,
+  },
+
+  selectedText: {
     fontSize: 16,
     color: "#000",
   },
 
-  dropdown: {
-    backgroundColor: "transparent",
-    borderWidth: 0,
-    color: "#fff",
+  placeholderText: {
+    fontSize: 16,
+    color: "#B3B3B3",
   },
 
   formContainer: {
