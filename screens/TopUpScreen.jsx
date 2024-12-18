@@ -12,7 +12,7 @@ const TopUpScreen = () => {
 
   const payments = [
     { label: "BYOND Pay", value: "BYOND Pay" },
-    { label: "Transfer", value: "Transfer" },
+    { label: "Bank Transfer", value: "Bank Transfer" },
   ];
 
   const [selectedValue, setSelectedValue] = useState(payments[0].value);
