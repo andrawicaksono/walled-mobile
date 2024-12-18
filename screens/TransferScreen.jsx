@@ -29,6 +29,7 @@ const TransferScreen = () => {
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const fetchUserData = useCallback(async () => {
     const response = await fetchUser();
@@ -66,7 +67,17 @@ const TransferScreen = () => {
     }
   };
 
+  useEffect(() => {
+    if (amountInput) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [amountInput]);
+
   const handleTransfer = async () => {
+    setIsButtonDisabled(true);
+
     const data = {
       type: "d",
       from_to: selectedValue,
@@ -143,7 +154,9 @@ const TransferScreen = () => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <SubmitButton onPress={handleTransfer}>Transfer</SubmitButton>
+            <SubmitButton onPress={handleTransfer} disabled={isButtonDisabled}>
+              Transfer
+            </SubmitButton>
           </View>
         </ScrollView>
       </SafeAreaView>

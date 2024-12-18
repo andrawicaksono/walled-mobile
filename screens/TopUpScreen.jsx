@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -20,6 +20,7 @@ const TopUpScreen = () => {
   const [amountInput, setAmountInput] = useState("");
   const [rawAmountInput, setRawAmountInput] = useState(0);
   const [notesInput, setNotesInput] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleAmountInputChange = (text) => {
     const rawValue = text.replace(/[^\d]/g, "");
@@ -34,7 +35,16 @@ const TopUpScreen = () => {
     }
   };
 
+  useEffect(() => {
+    if (amountInput) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [amountInput]);
+
   const handleTopUp = async () => {
+    setIsButtonDisabled(true);
     const data = {
       type: "c",
       from_to: selectedValue,
@@ -98,7 +108,9 @@ const TopUpScreen = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <SubmitButton onPress={handleTopUp}>Top Up</SubmitButton>
+          <SubmitButton onPress={handleTopUp} disabled={isButtonDisabled}>
+            Top Up
+          </SubmitButton>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
